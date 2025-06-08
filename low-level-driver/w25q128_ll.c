@@ -1,3 +1,9 @@
+/**
+ * @file w25q128_ll.c
+ * @brief w25q128 low-level driver
+ * @author Filip Stojanovic
+ */
+
 #include "w25q128_ll.h"
 
 #define W25Q128_SPI_TIMEOUT_MS 100

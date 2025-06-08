@@ -1,3 +1,9 @@
+/**
+ * @file w25q128_ll.h 
+ * @brief w25q128 low-level driver
+ * @author Filip Stojanovic 
+ */
+
 #ifndef W25Q128_H 
 #define W25Q128_H
 
@@ -75,50 +81,162 @@ typedef struct {
     uint16_t cs_pin;
 } W25Q128_TypeDef;
 
+
+/**
+ * @brief w25q128 SPI Chip Select function
+ * @param w25q128 Pointer to the flash configuration struct
+ * @return None
+ */
 void W25Q128_ChipSelect(W25Q128_TypeDef *w25q128);
 
+/**
+ * @brief w25q128 SPI Chip Deselect function
+ * @param w25q128 Pointer to the flash configuration struct
+ * @return None
+ */
 void W25Q128_ChipDeselect(W25Q128_TypeDef *w25q128);
 
+/**
+ * @brief w25q128 SPI Write function
+ * @param w25q128 Pointer to the flash configuration struct
+ * @param data Data pointer
+ * @param len Size of data 
+ * @param timeout Timeout of SPI write operation
+ * @return None
+ */
 void W25Q128_SPIWrite(W25Q128_TypeDef *w25q128, uint8_t *data, uint16_t len, 
                                                             uint32_t timeout);
 
+/**
+ * @brief w25q128 SPI Read function
+ * @param w25q128 Pointer to the flash configuration struct
+ * @param data Data pointer
+ * @param len Size of data 
+ * @param timeout Timeout of SPI read operation
+ * @return None
+ */
 void W25Q128_SPIRead(W25Q128_TypeDef *w25q128, uint8_t *data, uint16_t len, 
                                                             uint32_t timeout);
 
+/**
+ * @brief w25q128 delay function
+ * @param delay_ms Delay in milliseconds
+ * @return None
+ * @note This function blocks the thread it is called in, use it with concern
+ */
 void W25Q128_DelayMs(uint32_t delay_ms);
 
+/**
+ * @brief Function used to reset w25q128 flash memory
+ * @param w25q128 Pointer to the flash configuration struct
+ * @return None
+ */
 void W25Q128_Reset(W25Q128_TypeDef *w25q128);
 
+/**
+ * @brief Function that reads the flash ID
+ * @param w25q128 Pointer to the flash configuration struct
+ * @param id Type of ID that is being read
+ * @return w25q128 ID
+ * @note Only JEDEC_ID can be obtained using this function at the moment.
+ *       All other ID's will be provided in future versions of this library. 
+ */
 uint32_t W25Q128_ReadID(W25Q128_TypeDef *w25q128, W25Q128_ID_TypeDef id);
 
+/**
+ * @brief Function that reads data from w25q128 memory 
+ * @param w25q128 Pointer to the flash configuration struct
+ * @param start_page Start page of flash memory from which data reading
+ *                   should start
+ * @param offset Offset represented in bytes in the page from which data is 
+ *               being red from
+ * @param size Data size that is red
+ * @param r_data Pointer to the receive buffer
+ * @retval ::W25Q128_StatusTypeDef
+ */
 W25Q128_StatusTypeDef W25Q128_Read(W25Q128_TypeDef *w25,
                                     uint32_t start_page,
                                     uint8_t offset,
                                     uint32_t size,
                                     uint8_t *r_data);
 
-
+/**
+ * @brief Function that reads data in fast mode from w25q128 memory
+ * @param w25q128 Pointer to the flash configuration struct
+ * @param start_page Start page of flash memory from which data reading
+ *                   should start
+ * @param offset Offset represented in bytes in the page from which data is 
+ *               being red from
+ * @param size Data size that is red
+ * @param r_data Pointer to the receive buffer
+ * @retval ::W25Q128_StatusTypeDef
+ * @note This function reads data much faster than regular W25Q128_Read function, 
+ *       but note that is must send one dummy byte.
+ */
 W25Q128_StatusTypeDef W25Q128_FastRead(W25Q128_TypeDef *w25,
                                         uint32_t start_page,
                                         uint8_t offset,
                                         uint32_t size,
                                         uint8_t *r_data);
 
+/**
+ * @brief Function that enables any operation with w25q128
+ * @param w25q128 Pointer to the flash configuration struct
+ * @retval ::W25Q128_StatusTypeDef
+ */
 W25Q128_StatusTypeDef W25Q128_WriteEnable(W25Q128_TypeDef *w25);
 
+/**
+ * @brief Function that disables any operation with w25q128
+ * @param w25q128 Pointer to the flash configuration struct
+ * @retval ::W25Q128_StatusTypeDef
+ */
 W25Q128_StatusTypeDef W25Q128_WriteDisable(W25Q128_TypeDef *w25);
 
+/**
+ * @brief Function that erases specified sector
+ * @param w25q128 Pointer to the flash configuration struct
+ * @param num_sector Number of sector
+ * @retval ::W25Q128_StatusTypeDef
+ */
 W25Q128_StatusTypeDef W25Q128_EraseSector(W25Q128_TypeDef *w25, 
                                                         uint16_t num_sector);
 
+/**
+ * @brief Function used to read status register
+ * @param w25q128 Pointer to the flash configuration struct
+ * @return Status register value
+ */
 uint8_t W25Q128_ReadStatusRegister(W25Q128_TypeDef *w25);
 
+/**
+ * @brief Function used to check if w25q128 has finished all operations
+ * @param w25q128 Pointer to the flash configuration struct
+ * @retval ::W25Q128_StatusTypeDef
+ */
 W25Q128_StatusTypeDef W25Q128_CheckBUSY(W25Q128_TypeDef *w25);
 
+/**
+ * @brief Function that writes data to a single page
+ * @param w25q128 Pointer to the flash configuration struct
+ * @param page Number of page that will is written
+ * @param offset Offset represented in bytes inside specified page
+ * @param data_size Data size written to page
+ * @param data Data pointer
+ * @retval ::W25Q128_StatusTypeDef
+ */
 W25Q128_StatusTypeDef W25Q128_WritePage(W25Q128_TypeDef *w25, uint32_t page, 
                                         uint16_t offset, uint32_t data_size, 
                                         uint8_t *data);
-
+/**
+ * @brief Function that writes multiple pages
+ * @param w25q128 Pointer to the flash configuration struct
+ * @param page Number of page that will is written
+ * @param offset Offset represented in bytes inside specified page
+ * @param size Data size written to page
+ * @param data Data pointer
+ * @retval ::W25Q128_StatusTypeDef
+ */
 W25Q128_StatusTypeDef W25Q128_Write(W25Q128_TypeDef *w25, uint32_t page, 
                                     uint16_t offset, uint32_t size, 
                                     uint8_t *data);
