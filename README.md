@@ -8,7 +8,7 @@ These drivers provide the "bare-metal" access to the serial flash memory(reading
 
 ## littlefs-level-drivers
 
-These drivers provide functions needed by littlefs filesystem to work: prog, erase, read and sync. Refer to the official **littlefs** Github if you want to learn more about it: https://github.com/littlefs-project/littlefs .
+These drivers provide functions needed by littlefs filesystem to work: prog, erase, read and sync. Refer to the official **littlefs** Github if you want to learn more about littlefs itself: https://github.com/littlefs-project/littlefs .
 
 # library implementation demos
 The implementation of this library can be found here: https://github.com/filipembedded/stm32-nvs-demos. It features low-level demo and littlefs demo for w25q128 flash.

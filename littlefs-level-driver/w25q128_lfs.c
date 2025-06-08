@@ -1,3 +1,9 @@
+/**
+ * @file w25q128_lfs.c
+ * @brief w25q128 flash littlefs layer 
+ * @author Filip Stojanovic
+ */
+
 #include "w25q128_lfs.h"
 #include "w25q128_ll.h"
 
