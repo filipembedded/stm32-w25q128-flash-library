@@ -235,16 +235,6 @@ W25Q128_StatusTypeDef W25Q128_WritePage(W25Q128_TypeDef *w25, uint32_t page,
     // Number of pages to be written
     uint32_t num_pages = end_page - start_page + 1;
 
-#if ERASE_BEFORE_PAGE_WRITE_AUTO
-    uint16_t start_sector = start_page/16;
-    uint16_t end_sector = end_page/16;
-    uint16_t num_sectors = end_sector - start_sector + 1;
-    for (int i = 0; i < num_sectors; i++)
-    {
-        W25Q128_EraseSector(w25, start_sector++);
-    }
-#endif
-
     // Writting the data
     for (uint32_t i = 0; i < num_pages; i++)
     {

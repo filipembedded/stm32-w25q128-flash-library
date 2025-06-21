@@ -9,7 +9,6 @@
 
 #include "w25q128_conf_ll.h"
 
-#define ERASE_BEFORE_PAGE_WRITE_AUTO 0
 #define W25Q128_SECTOR_SIZE 4096
 #define W25Q128_PAGE_SIZE   256
 #define W25Q128_SECTOR_COUNT 4096
